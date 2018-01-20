@@ -1,21 +1,21 @@
 #pragma once
-#include "GLObject.h"
+#include "GLobject.h"
 #include <memory>
 
-class GLObjectHandler
-{
+class GLobjectHandler {
 private:
-	std::unique_ptr<GLObject> obj_;
+	std::unique_ptr<GLobject> obj_;
 public:
-	GLObjectHandler(GLObject* obj);
+	GLobjectHandler(GLobject* obj);
 
 	//Delete the copy constructor/assignment.
-	GLObjectHandler(const GLObjectHandler &) = delete;
-	GLObjectHandler &operator=(const GLObjectHandler &) = delete;
+	GLobjectHandler(const GLobjectHandler &) = delete;
+	GLobjectHandler &operator=(const GLobjectHandler &) = delete;
 
-	GLObjectHandler(GLObjectHandler &&other);
-	GLObjectHandler& operator=(GLObjectHandler &&other);
+	GLobjectHandler(GLobjectHandler &&other);
+	GLobjectHandler& operator=(GLobjectHandler &&other);
 
-	int id();
+	GLobject* obj();
+	int getID();
 };
 

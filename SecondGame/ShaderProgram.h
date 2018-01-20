@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
-#include "GLObject.h"
-class ShaderProgram : public GLObject {
+#include "GLobject.h"
+class ShaderProgram : public GLobject {
 public:
 	ShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath);
+	~ShaderProgram();
 };

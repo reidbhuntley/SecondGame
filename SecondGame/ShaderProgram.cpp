@@ -7,7 +7,8 @@
 
 ShaderProgram::ShaderProgram(std::string vertexShaderFilename, std::string fragmentShaderFilename) {
 	char c;
-	std::vector<char> chars;
+	std::vector<char> vertexChars;
+	std::vector<char> fragmentChars;
 	std::ifstream inFile;
 
 	inFile.open("../res/shaders/" + vertexShaderFilename);
@@ -16,25 +17,24 @@ ShaderProgram::ShaderProgram(std::string vertexShaderFilename, std::string fragm
 		exit(1);   // call system to stop
 	}
 	while ((c = inFile.get()) != EOF) {
-		chars.push_back(c);
+		vertexChars.push_back(c);
 	}
 	inFile.close();
-	const char* vertexShaderSource = &chars[0];
-	chars.clear();
+	vertexChars.push_back('\0');
+	const char* vertexShaderSource = &vertexChars[0];
 
 	inFile.open("../res/shaders/" + fragmentShaderFilename);
 	if (!inFile) {
-		std::cerr << "Unable to open vertex shader file " << fragmentShaderFilename;
+		std::cerr << "Unable to open fragment shader file " << fragmentShaderFilename;
 		exit(1);   // call system to stop
 	}
 	while ((c = inFile.get()) != EOF) {
-		chars.push_back(c);
+		fragmentChars.push_back(c);
 	}
 	inFile.close();
-	const char* fragmentShaderSource = &chars[0];
+	fragmentChars.push_back('\0');
+	const char* fragmentShaderSource = &fragmentChars[0];
 
-	// build and compile our shader program
-	// ------------------------------------
 	// vertex shader
 	int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -70,13 +70,14 @@ ShaderProgram::ShaderProgram(std::string vertexShaderFilename, std::string fragm
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
+	glDetachShader(shaderProgram, vertexShader);
+	glDetachShader(shaderProgram, fragmentShader);
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
 	this->initID(shaderProgram);
 }
 
-GLObject::~GLObject() {
-	glUseProgram(0);
+ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(this->getID());
 }

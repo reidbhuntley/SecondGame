@@ -1,11 +1,11 @@
-#include "GLObjectHandler.h"
+#include "GLobjectHandler.h"
 #include <memory>
 
-GLObjectHandler::GLObjectHandler(GLObject* obj) : obj_(obj) {}
+GLobjectHandler::GLobjectHandler(GLobject* obj) : obj_(obj) {}
 
-GLObjectHandler::GLObjectHandler(GLObjectHandler &&other) : obj_(other.obj_.release()) {}
+GLobjectHandler::GLobjectHandler(GLobjectHandler &&other) : obj_(other.obj_.release()) {}
 
-GLObjectHandler& GLObjectHandler::operator=(GLObjectHandler &&other) {
+GLobjectHandler& GLobjectHandler::operator=(GLobjectHandler &&other) {
 	//ALWAYS check for self-assignment.
 	if (this != &other) {
 		obj_.reset(other.obj_.release());
@@ -13,7 +13,14 @@ GLObjectHandler& GLObjectHandler::operator=(GLObjectHandler &&other) {
 	return *this;
 }
 
-int GLObjectHandler::id() {
+GLobject* GLobjectHandler::obj() {
+	if (obj_) {
+		return obj_.get();
+	}
+	return NULL;
+}
+
+int GLobjectHandler::getID() {
 	if (obj_) {
 		return obj_.get()->getID();
 	}

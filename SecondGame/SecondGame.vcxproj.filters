@@ -24,10 +24,16 @@
     <ClCompile Include="ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLObject.cpp">
+    <ClCompile Include="GLobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLObjectHandler.cpp">
+    <ClCompile Include="GLobjectHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,10 +41,16 @@
     <ClInclude Include="ShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GLObject.h">
+    <ClInclude Include="GLobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GLObjectHandler.h">
+    <ClInclude Include="GLobjectHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

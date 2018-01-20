@@ -1,13 +1,14 @@
-#include "GLObject.h"
+#include "GLobject.h"
 
-void GLObject::initID(int id) {
+void GLobject::initID(GLuint id) {
 	if (id_ == 0) {
 		id_ = id;
 	}
 }
 
-int GLObject::getID() {
+GLuint GLobject::getID() {
 	return id_;
 }
 
-GLObject::GLObject(){}
+GLobject::GLobject(){}
+GLobject::~GLobject() {}

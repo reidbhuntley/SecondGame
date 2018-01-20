@@ -127,15 +127,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="GLObject.cpp" />
-    <ClCompile Include="GLObjectHandler.cpp" />
+    <ClCompile Include="GLobject.cpp" />
+    <ClCompile Include="GLobjectHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLObject.h" />
-    <ClInclude Include="GLObjectHandler.h" />
+    <ClInclude Include="GLobject.h" />
+    <ClInclude Include="GLobjectHandler.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="VAO.h" />
+    <ClInclude Include="VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

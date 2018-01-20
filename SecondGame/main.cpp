@@ -2,16 +2,50 @@
 #include <GLFW\glfw3.h>
 #include <iostream>
 #include <fstream>
-#include "GLObjectHandler.h"
+#include "GLobjectHandler.h"
 #include "ShaderProgram.h"
+#include "VAO.h"
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-}
+GLFWwindow* createContext();
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow *window);
 
-void processInput(GLFWwindow *window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+int main()
+{
+	GLFWwindow* window = createContext();
+	glViewport(0, 0, 800, 600);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	ShaderProgram program("vertexShader.txt", "fragmentShader.txt");
+
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f, // left  
+		0.5f, -0.5f, 0.0f, // right 
+		0.0f,  0.5f, 0.0f  // top   
+	};
+	VAO vao;
+	vao.addVBO(vertices, sizeof(vertices));
+
+	// render loop
+	while (!glfwWindowShouldClose(window)) {
+		// input
+		processInput(window);
+
+		// rendering commands
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(program.getID());
+		glBindVertexArray(vao.getID());
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		// check and call events and swap the buffers
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
+	return 0;
 }
 
 GLFWwindow* createContext() {
@@ -35,29 +69,11 @@ GLFWwindow* createContext() {
 	return window;
 }
 
-int main()
-{
-	GLFWwindow* window = createContext();
-	glViewport(0, 0, 800, 600);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
 
-	GLObjectHandler program(new ShaderProgram("test.txt", "test.txt"));
-
-
-	// render loop
-	while (!glfwWindowShouldClose(window)) {
-		// input
-		processInput(window);
-
-		// rendering commands
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// check and call events and swap the buffers
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
-	return 0;
+void processInput(GLFWwindow *window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 }
