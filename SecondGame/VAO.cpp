@@ -1,6 +1,5 @@
 #include "VAO.h"
 #include <vector>
-#include <iostream>
 
 VAO::VAO() {
 	GLuint id;
@@ -14,8 +13,17 @@ VAO::~VAO() {
 	glDeleteVertexArrays(1, id_ptr);
 }
 
-void VAO::addVBO(float vertices[], int size) {
+void VAO::prepareVBOattribData(VBOattribData* data) {
+	attribDataQueue.push_back(data);
+}
+
+void VAO::addVBO() {
+	vbos.push_back(std::unique_ptr<VBO>(new VBO()));
+	VBO* vbo = vbos.back().get();
 	glBindVertexArray(getID());
-	vbos.push_back(std::unique_ptr<VBO>(new VBO(vertices, size)));
-	glBindVertexArray(0);
+	for (int i = 0; i < attribDataQueue.size(); i++) {
+		vbo->loadVBOattribData(attribDataQueue[i]);
+		delete attribDataQueue[i];
+	}
+	attribDataQueue.clear();
 }

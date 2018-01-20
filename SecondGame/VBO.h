@@ -1,9 +1,10 @@
 #pragma once
 #include "GLobject.h"
+#include "VBOattribData.h"
 
 class VBO : public GLobject {
 public:
-	VBO(float vertices[], int length);
+	VBO();
 	~VBO();
+	void loadVBOattribData(VBOattribData* data);
 };
-

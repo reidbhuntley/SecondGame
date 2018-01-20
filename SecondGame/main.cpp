@@ -24,7 +24,8 @@ int main()
 		0.0f,  0.5f, 0.0f  // top   
 	};
 	VAO vao;
-	vao.addVBO(vertices, sizeof(vertices));
+	vao.prepareVBOattribData(new VBOattribData(vertices, 0, 3, GL_FLOAT, 9));
+	vao.addVBO();
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
