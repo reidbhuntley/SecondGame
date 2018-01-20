@@ -19,13 +19,22 @@ int main()
 	ShaderProgram program("vertexShader.txt", "fragmentShader.txt");
 
 	float vertices[] = {
-		-0.5f, -0.5f, 0.0f, // left  
-		0.5f, -0.5f, 0.0f, // right 
-		0.0f,  0.5f, 0.0f  // top   
+		0.5f,  0.5f, 0.0f,  // top right
+		0.5f, -0.5f, 0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,  // bottom left
+		-0.5f,  0.5f, 0.0f   // top left 
+	};
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
 	};
 	VAO vao;
-	vao.prepareVBOattribData(new VBOattribData(vertices, 0, 3, GL_FLOAT, 9));
-	vao.addVBO();
+	vao.loadElements(indices, 6);
+	vao.prepareVBOattribData(vertices, 0, 3, GL_FLOAT, 12);
+	vao.loadVBO();
+
+	// wireframe
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
@@ -36,9 +45,8 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(program.getID());
-		glBindVertexArray(vao.getID());
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		program.use();
+		vao.drawElements();
 
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);

@@ -81,3 +81,7 @@ ShaderProgram::ShaderProgram(std::string vertexShaderFilename, std::string fragm
 ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(this->getID());
 }
+
+void ShaderProgram::use() {
+	glUseProgram(getID());
+}

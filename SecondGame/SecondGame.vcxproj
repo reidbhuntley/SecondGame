@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EAO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GLobject.cpp" />
     <ClCompile Include="GLobjectHandler.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="VBOattribData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EAO.h" />
     <ClInclude Include="GLobject.h" />
     <ClInclude Include="GLobjectHandler.h" />
     <ClInclude Include="ShaderProgram.h" />

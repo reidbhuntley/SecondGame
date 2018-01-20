@@ -5,4 +5,5 @@ class ShaderProgram : public GLobject {
 public:
 	ShaderProgram(std::string vertexShaderPath, std::string fragmentShaderPath);
 	~ShaderProgram();
+	void use();
 };

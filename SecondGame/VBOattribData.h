@@ -5,8 +5,8 @@ struct VBOattribData {
 	GLuint attribID;
 	GLint elementsPerVec;
 	GLenum elementType;
-	int length;
+	unsigned int length;
 public:
-	VBOattribData(void* data, GLuint attribID, GLint elementsPerVec, GLenum elementType, int length);
+	VBOattribData(void* data, GLuint attribID, GLint elementsPerVec, GLenum elementType, unsigned int length);
 };
 
