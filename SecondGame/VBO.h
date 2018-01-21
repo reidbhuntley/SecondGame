@@ -8,7 +8,7 @@ public:
 	VBO();
 	~VBO();
 	void bind();
-	void loadVBOattribData(VBOattribData** data, unsigned int length, std::size_t totalBytes);
+	void loadVBOattribData(VBOattribData** data, unsigned int length, std::size_t totalBytes, std::size_t totalStride);
 private:
 	void* buffer;
 	bool bufferIsAllocated = false;

@@ -7,6 +7,7 @@ public:
 	~ShaderProgram();
 	void use();
 	GLuint getUniformLocation(std::string name);
-private:
-	std::map<std::string, GLuint> uniformLocations;
+	void setBool(std::string name, bool value);
+	void setInt(std::string name, int value);
+	void setFloat(std::string name, float value);
 };

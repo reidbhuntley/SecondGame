@@ -87,12 +87,15 @@ void ShaderProgram::use() {
 }
 
 GLuint ShaderProgram::getUniformLocation(std::string name) {
-	std::map<std::string, GLuint>::iterator it = uniformLocations.find(name);
-	if (it != uniformLocations.end()) {
-		return it->second;
-	} else {
-		GLuint location = glGetUniformLocation(getID(), &name[0]);
-		uniformLocations.insert(std::pair<std::string, GLuint>(name, location));
-		return location;
-	}
+	return glGetUniformLocation(getID(), &name[0]);
+}
+
+void ShaderProgram::setBool(const std::string name, bool value) {
+	glUniform1i(getUniformLocation(name), (int)value);
+}
+void ShaderProgram::setInt(const std::string name, int value) {
+	glUniform1i(getUniformLocation(name), value);
+}
+void ShaderProgram::setFloat(const std::string name, float value) {
+	glUniform1f(getUniformLocation(name), value);
 }

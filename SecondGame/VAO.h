@@ -21,5 +21,6 @@ private:
 	std::unique_ptr<EAO> elements;
 	unsigned int elementCount = 0;
 	std::size_t totalBytes = 0;
+	std::size_t totalStride = 0;
 };
 

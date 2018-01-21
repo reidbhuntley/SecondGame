@@ -10,8 +10,7 @@ GLFWwindow* createContext();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
-int main()
-{
+int main() {
 	GLFWwindow* window = createContext();
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

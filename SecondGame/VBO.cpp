@@ -14,7 +14,7 @@ VBO::~VBO() {
 		free(buffer);
 	}
 }
-void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, std::size_t totalBytes) {
+void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, std::size_t totalBytes, std::size_t totalStride) {
 	bind();
 	
 	if (bufferIsAllocated) {
@@ -23,19 +23,20 @@ void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, std::size
 	buffer = malloc(totalBytes);
 	bufferIsAllocated = true;
 
-	void* ptr = buffer;
 	std::size_t offset = 0;
 	for (unsigned int i = 0; i < length; i++) {
 		VBOattribData* dataElement = data[i];
-		std::memcpy(ptr, dataElement->vecs, dataElement->totalSize);
+		void* ptr = static_cast<bool*>(buffer) + offset;
+		for (unsigned int j = 0; j < dataElement->totalSize; j += dataElement->vectorSize) {
+			std::memcpy(ptr, (bool*)(dataElement->vecs) + j, dataElement->vectorSize);
+			ptr = static_cast<bool*>(ptr) + totalStride;
+		}
 		glVertexAttribPointer(dataElement->attribID, dataElement->elementsPerVec, dataElement->elementType,
-			GL_FALSE, 0, (void*)(offset));
+			GL_FALSE, totalStride, (void*)(offset));
 		glEnableVertexAttribArray(dataElement->attribID);
-		ptr = static_cast<bool*>(ptr) + dataElement->totalSize;
-		offset += dataElement->totalSize;
+		offset += dataElement->vectorSize;
 	}
 	glBufferData(GL_ARRAY_BUFFER, totalBytes, buffer, GL_STATIC_DRAW);
-
 }
 
 void VBO::bind() {
