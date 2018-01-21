@@ -10,7 +10,7 @@ class VAO : public GLobject {
 public:
 	VAO();
 	~VAO();
-	void prepareVBOattribData(void* data, GLuint attribID, GLint elementsPerVec, GLenum elementType, unsigned int length);
+	void prepareVBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType, unsigned int length);
 	void loadVBO();
 	void loadElements(unsigned int* data, unsigned int length);
 	void bind();
@@ -20,6 +20,6 @@ private:
 	std::vector<VBOattribData*> attribDataQueue;
 	std::unique_ptr<EAO> elements;
 	unsigned int elementCount = 0;
-	unsigned int totalBytes = 0;
+	std::size_t totalBytes = 0;
 };
 

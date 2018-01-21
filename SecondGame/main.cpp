@@ -18,19 +18,23 @@ int main()
 
 	ShaderProgram program("vertexShader.txt", "fragmentShader.txt");
 
-	float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
+	float positions[] = {
+		0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		0.0f,  0.5f, 0.0f
 	};
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,  // first Triangle
-		1, 2, 3   // second Triangle
+	float colors[] = {
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f
+	};
+	unsigned int indices[] = {
+		0, 1, 2
 	};
 	VAO vao;
-	vao.loadElements(indices, 6);
-	vao.prepareVBOattribData(vertices, 0, 3, GL_FLOAT, 12);
+	vao.loadElements(indices, 3);
+	vao.prepareVBOattribData(0, positions, 3, GL_FLOAT, 9);
+	vao.prepareVBOattribData(1, colors, 3, GL_FLOAT, 9);
 	vao.loadVBO();
 
 	// wireframe
@@ -46,11 +50,6 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		program.use();
-
-		float timeValue = glfwGetTime();
-		float greenValue = sin(timeValue) / 2.0f + 0.5f;
-		glUniform4f(program.getUniformLocation("ourColor"), 0.0f, greenValue, 0.0f, 1.0f);
-
 		vao.drawElements();
 
 		// check and call events and swap the buffers

@@ -13,8 +13,8 @@ VAO::~VAO() {
 	glDeleteVertexArrays(1, id_ptr);
 }
 
-void VAO::prepareVBOattribData(void* data, GLuint attribID, GLint elementsPerVec, GLenum elementType, unsigned int length) {
-	attribDataQueue.push_back(new VBOattribData(data,attribID,elementsPerVec,elementType,length));
+void VAO::prepareVBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType, unsigned int length) {
+	attribDataQueue.push_back(new VBOattribData(attribID,data,elementsPerVec,elementType,length));
 	totalBytes += attribDataQueue.back()->totalSize;
 }
 
@@ -23,12 +23,9 @@ void VAO::loadVBO() {
 
 	vbos.push_back(std::unique_ptr<VBO>(new VBO()));
 	VBO* vbo = vbos.back().get();
-	unsigned int previousBytes = 0;
+	vbo->loadVBOattribData(&attribDataQueue[0], attribDataQueue.size(), totalBytes);
 	for (int i = 0; i < attribDataQueue.size(); i++) {
-		VBOattribData* data = attribDataQueue[i];
-		vbo->loadVBOattribData(data, previousBytes, totalBytes);
-		previousBytes += data->totalSize;
-		delete data;
+		delete attribDataQueue[i];
 	}
 	attribDataQueue.clear();
 	totalBytes = 0;
