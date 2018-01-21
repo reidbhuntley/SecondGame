@@ -5,6 +5,7 @@
 #include "GLobjectHandler.h"
 #include "ShaderProgram.h"
 #include "VAO.h"
+#include "Texture.h"
 
 GLFWwindow* createContext();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -18,23 +19,35 @@ int main() {
 	ShaderProgram program("vertexShader.txt", "fragmentShader.txt");
 
 	float positions[] = {
+		0.5f,  0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		-0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f
+		-0.5f,  0.5f, 0.0f
 	};
 	float colors[] = {
 		1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 1.0f
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 0.0f,
+	};
+	float texCoords[] = {
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f
 	};
 	unsigned int indices[] = {
-		0, 1, 2
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
 	};
 	VAO vao;
-	vao.loadElements(indices, 3);
+	vao.loadElements(indices, 6);
 	vao.prepareVBOattribData(0, positions, 3, GL_FLOAT);
 	vao.prepareVBOattribData(1, colors, 3, GL_FLOAT);
-	vao.loadVBO(3);
+	vao.prepareVBOattribData(2, texCoords, 2, GL_FLOAT);
+	vao.loadVBO(4);
+
+	Texture texture("container.jpg", GL_REPEAT, GL_LINEAR, GL_LINEAR);
 
 	// wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -48,6 +61,7 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		texture.bind();
 		program.use();
 		vao.drawElements();
 
