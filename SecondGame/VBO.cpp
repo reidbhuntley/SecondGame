@@ -14,13 +14,24 @@ VBO::~VBO() {
 		free(buffer);
 	}
 }
-void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, std::size_t totalBytes, std::size_t totalStride) {
+void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, unsigned int verticesCount) {
 	bind();
+
+	std::size_t totalSize = 0;
+	std::size_t totalStride = 0;
+	for (unsigned int i = 0; i < length; i++) {
+		VBOattribData* dataElement = data[i];
+		std::size_t stride = dataElement->vectorSize;
+		std::size_t size = verticesCount * stride;
+		totalStride += stride;
+		totalSize += size;
+		data[i]->totalSize = size;
+	}
 	
 	if (bufferIsAllocated) {
 		free(buffer);
 	}
-	buffer = malloc(totalBytes);
+	buffer = malloc(totalSize);
 	bufferIsAllocated = true;
 
 	std::size_t offset = 0;
@@ -36,7 +47,7 @@ void VBO::loadVBOattribData(VBOattribData** data, unsigned int length, std::size
 		glEnableVertexAttribArray(dataElement->attribID);
 		offset += dataElement->vectorSize;
 	}
-	glBufferData(GL_ARRAY_BUFFER, totalBytes, buffer, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, totalSize, buffer, GL_STATIC_DRAW);
 }
 
 void VBO::bind() {

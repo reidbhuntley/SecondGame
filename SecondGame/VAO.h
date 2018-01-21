@@ -10,8 +10,8 @@ class VAO : public GLobject {
 public:
 	VAO();
 	~VAO();
-	void prepareVBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType, unsigned int length);
-	void loadVBO();
+	void prepareVBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType);
+	void loadVBO(unsigned int verticesCount);
 	void loadElements(unsigned int* data, unsigned int length);
 	void bind();
 	void drawElements();

@@ -32,9 +32,9 @@ int main() {
 	};
 	VAO vao;
 	vao.loadElements(indices, 3);
-	vao.prepareVBOattribData(0, positions, 3, GL_FLOAT, 9);
-	vao.prepareVBOattribData(1, colors, 3, GL_FLOAT, 9);
-	vao.loadVBO();
+	vao.prepareVBOattribData(0, positions, 3, GL_FLOAT);
+	vao.prepareVBOattribData(1, colors, 3, GL_FLOAT);
+	vao.loadVBO(3);
 
 	// wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

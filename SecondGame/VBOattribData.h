@@ -6,11 +6,10 @@ struct VBOattribData {
 	const GLuint attribID;
 	const GLint elementsPerVec;
 	const GLenum elementType;
-	const unsigned int length;
 	const std::size_t elementSize;
 	const std::size_t vectorSize;
-	const std::size_t totalSize;
+	std::size_t totalSize;
 public:
-	VBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType, unsigned int length);
+	VBOattribData(GLuint attribID, void* data, GLint elementsPerVec, GLenum elementType);
 };
 
