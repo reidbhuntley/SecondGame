@@ -7,5 +7,5 @@ public:
 	VBO();
 	~VBO();
 	void bind();
-	void loadVBOattribData(VBOattribData* data);
+	void loadVBOattribData(VBOattribData* data, unsigned int previousBytes, unsigned int totalBytes);
 };

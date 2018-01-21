@@ -20,5 +20,6 @@ private:
 	std::vector<VBOattribData*> attribDataQueue;
 	std::unique_ptr<EAO> elements;
 	unsigned int elementCount = 0;
+	unsigned int totalBytes = 0;
 };
 

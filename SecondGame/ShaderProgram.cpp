@@ -85,3 +85,14 @@ ShaderProgram::~ShaderProgram() {
 void ShaderProgram::use() {
 	glUseProgram(getID());
 }
+
+GLuint ShaderProgram::getUniformLocation(std::string name) {
+	std::map<std::string, GLuint>::iterator it = uniformLocations.find(name);
+	if (it != uniformLocations.end()) {
+		return it->second;
+	} else {
+		GLuint location = glGetUniformLocation(getID(), &name[0]);
+		uniformLocations.insert(std::pair<std::string, GLuint>(name, location));
+		return location;
+	}
+}

@@ -15,6 +15,7 @@ VAO::~VAO() {
 
 void VAO::prepareVBOattribData(void* data, GLuint attribID, GLint elementsPerVec, GLenum elementType, unsigned int length) {
 	attribDataQueue.push_back(new VBOattribData(data,attribID,elementsPerVec,elementType,length));
+	totalBytes += attribDataQueue.back()->totalSize;
 }
 
 void VAO::loadVBO() {
@@ -22,11 +23,15 @@ void VAO::loadVBO() {
 
 	vbos.push_back(std::unique_ptr<VBO>(new VBO()));
 	VBO* vbo = vbos.back().get();
+	unsigned int previousBytes = 0;
 	for (int i = 0; i < attribDataQueue.size(); i++) {
-		vbo->loadVBOattribData(attribDataQueue[i]);
-		delete attribDataQueue[i];
+		VBOattribData* data = attribDataQueue[i];
+		vbo->loadVBOattribData(data, previousBytes, totalBytes);
+		previousBytes += data->totalSize;
+		delete data;
 	}
 	attribDataQueue.clear();
+	totalBytes = 0;
 }
 
 void VAO::loadElements(unsigned int* data, unsigned int length) {

@@ -10,13 +10,12 @@ VBO::~VBO() {
 	GLuint* id_ptr = &id;
 	glDeleteBuffers(1, id_ptr);
 }
-void VBO::loadVBOattribData(VBOattribData* data) {
+void VBO::loadVBOattribData(VBOattribData* data, unsigned int previousBytes, unsigned int totalBytes) {
 	bind();
 
-	unsigned int typeSize = sizeof(data->elementType);
-	glBufferData(GL_ARRAY_BUFFER, data->length * typeSize, data->vecs, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data->length * data->elementSize, data->vecs, GL_STATIC_DRAW);
 	glVertexAttribPointer(data->attribID, data->elementsPerVec, data->elementType, GL_FALSE,
-		data->elementsPerVec * typeSize, (void*)0);
+		totalBytes, (void*)(previousBytes));
 	glEnableVertexAttribArray(data->attribID);
 }
 
