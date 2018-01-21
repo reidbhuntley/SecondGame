@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <glad\glad.h>
+#include <glm\gtc\type_ptr.hpp>
 
 ShaderProgram::ShaderProgram(std::string vertexShaderFilename, std::string fragmentShaderFilename) {
 	std::string vertexPath = "../res/shaders/" + vertexShaderFilename;
@@ -103,4 +104,7 @@ void ShaderProgram::setInt(const std::string name, int value) {
 }
 void ShaderProgram::setFloat(const std::string name, float value) {
 	glUniform1f(getUniformLocation(name), value);
+}
+void ShaderProgram::setMatrix4(const std::string name, glm::mat4 matrix) {
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }

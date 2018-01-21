@@ -7,4 +7,5 @@ public:
 	Texture(std::string textureFilename, GLenum wrap, GLenum minFilter, GLenum magFilter);
 	~Texture();
 	void bind();
+	void bind(GLenum textureUnit);
 };
